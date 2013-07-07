@@ -4,11 +4,20 @@ var app = express.createServer(express.logger());
 
 app.get('/', function(request, response) {
 	var fs = require('fs');
-	buf = fs.readFileSync("index.htmle");
-	if (buf != null) {
-		response.send(buf.toString());
-	} else {
-		response.send('Error reading index.html');
+	try {
+		buf = fs.readFileSync("index.htmle");
+		if (buf != null) {
+			response.send(buf.toString());
+		} 
+	}
+	catch (e) 	{
+		if (e instanceof Error) {
+			if (e.code === 'ENOENT') {
+				response.send('Error reading index.html');
+			} else {
+				throw e;
+			}
+		}
 	}
 });
 
