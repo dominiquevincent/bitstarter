@@ -5,7 +5,7 @@ var app = express.createServer(express.logger());
 app.get('/', function(request, response) {
 	var fs = require('fs');
 	try {
-		buf = fs.readFileSync("index.htmle");
+		buf = fs.readFileSync("index.html");
 		if (buf != null) {
 			response.send(buf.toString());
 		} 
@@ -13,7 +13,7 @@ app.get('/', function(request, response) {
 	catch (e) 	{
 		if (e instanceof Error) {
 			if (e.code === 'ENOENT') {
-				response.send('Error reading index.html');
+				response.send('Error reading file (not found?): index.html');
 			} else {
 				throw e;
 			}
